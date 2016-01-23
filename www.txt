@@ -1,0 +1,78 @@
+<table border="0" cellspacing="0" cellpadding="5">
+<tr bgcolor="#95928C" height="3"><td colspan="2"></td></tr>
+<tr height="7"><td colspan="2"></td></tr>
+<!-- end of view-head.tag -->
+    <!-- view-body.tag -->
+    <!-- view-marc.tag -->
+<tr >
+  <td valign="top">LDR</td>
+  <td valign="top">01218cam#a2200217#i#4500</td>
+</tr>
+<tr >
+  <td valign="top">001</td>
+  <td valign="top">004716111</td>
+</tr>
+<tr >
+  <td valign="top">005</td>
+  <td valign="top">20100826134259.0</td>
+</tr>
+<tr >
+  <td valign="top">008</td>
+  <td valign="top">100803s2010####ru############000#|#rus|d</td>
+</tr>
+<tr >
+  <td valign="top">017</td>
+  <td valign="top">##$a 10-60306</td>
+</tr>
+<tr >
+  <td valign="top">020</td>
+  <td valign="top">##$a 978-5-9922-0646-3</td>
+</tr>
+<tr >
+  <td valign="top">040</td>
+  <td valign="top">##$a RuMoRKP$b rus$e rcr$d RuMoRGB</td>
+</tr>
+<tr >
+  <td valign="top">041</td>
+  <td valign="top">0#$a rus</td>
+</tr>
+<tr >
+  <td valign="top">080</td>
+  <td valign="top">##$a 821.161.1-31</td>
+</tr>
+<tr >
+  <td valign="top">084</td>
+  <td valign="top">##$a Ш5(2=Р)75-644.5$2 rubbk</td>
+</tr>
+<tr >
+  <td valign="top">100</td>
+  <td valign="top">1#$a Кружевский, Дмитрий Сергеевич</td>
+</tr>
+<tr >
+  <td valign="top">245</td>
+  <td valign="top">00$a Магфиг :$b роман$c Дмитрий Кружевский</td>
+</tr>
+<tr >
+  <td valign="top">260</td>
+  <td valign="top">##$a Москва$b Армада$b Изд-во Альфа-книга$c 2010</td>
+</tr>
+<tr >
+  <td valign="top">300</td>
+  <td valign="top">##$a 348, [1] с.$c 21 см</td>
+</tr>
+<tr >
+  <td valign="top">650</td>
+  <td valign="top">#7$a Филологические науки. Художественная литература -- Российская Федерация -- Русская литература -- с сер. 50-х гг. 20 в. -- Произведения художественной литературы -- Художественная проза -- Романы. Повести. Рассказы -- Фантастические и мистические романы, повести, рассказы. Романы ужасов$2 rubbk</td>
+</tr>
+<tr >
+  <td valign="top">852</td>
+  <td valign="top">4#$a РГБ$b FB$j 10 10-33/117$x 70</td>
+</tr>
+<tr >
+  <td valign="top">852</td>
+  <td valign="top">4#$a РГБ$b FB$j 10 10-33/118$x 70</td>
+</tr>
+<!-- end of view-marc.tag -->
+<!-- end of view-body.tag -->
+    <!-- view-tail.tag -->
+</table>
