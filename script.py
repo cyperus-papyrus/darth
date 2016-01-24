@@ -36,8 +36,8 @@ for line in lines:
 
 n = 0
 for i in lst_isbn:
-    #url = 'http://old.rsl.ru/view.jsp?f=7&t=3&v0=' + str(lst_isbn[n]) + '&f=1003&t=1&v1=&f=4&t=2&v2=&f=21&t=3&v3=&f=1016&t=3&v4=&f=1016&t=3&v5=&cc=a1&v=marc&s=2&ce=4'
-    url = 'http://old.rsl.ru/view.jsp?f=7&t=3&v0=978-5-9922-0646-3&f=1003&t=1&v1=&f=4&t=2&v2=&f=21&t=3&v3=&f=1016&t=3&v4=&f=1016&t=3&v5=&cc=a1&v=marc&s=2&ce=4'
+    url = 'http://old.rsl.ru/view.jsp?f=7&t=3&v0=' + str(lst_isbn[n]) + '&f=1003&t=1&v1=&f=4&t=2&v2=&f=21&t=3&v3=&f=1016&t=3&v4=&f=1016&t=3&v5=&cc=a1&v=marc&s=2&ce=4'
+    #url = 'http://old.rsl.ru/view.jsp?f=7&t=3&v0=978-5-9922-0646-3&f=1003&t=1&v1=&f=4&t=2&v2=&f=21&t=3&v3=&f=1016&t=3&v4=&f=1016&t=3&v5=&cc=a1&v=marc&s=2&ce=4'
     data = urllib.urlopen(url).read() #.decode('utf-8') #.encode('utf-8')
     table = re.search('<span class="fcard"><b>.+?(<table.*?</table>)', data, re.DOTALL)
     try:
@@ -49,7 +49,8 @@ for i in lst_isbn:
     t3 = re.sub(u'^\s+$', '', t3,0, re.M )
     t3 = re.sub(u'\n\n+', '\n', t3,0, re.M )
     t3 = re.sub(u'(<strong>)|(</strong>)', '', t3,0, re.M )
-    t3 = re.sub(u'(<br\s{0,3}/>)', '', t3,0, re.M )    
+    t3 = re.sub(u'(<br\s{0,3}/>)', '', t3,0, re.M )
+    t3 = re.sub(u'LDR', '000', t3,0, re.M )
     n = n + 1
     tree = ET.fromstring(t3)
     #формируем список из списков с одной карточкой 
@@ -57,9 +58,9 @@ for i in lst_isbn:
 
     for child in tree.findall('tr'):
         texts = [child2.text for child2 in child.findall('td')]
-        print child2.text
+        #print child2.text
         if len(texts) > 1:
-            if texts[0] < 010:
+            if int(texts[0]) < 010:
                 myrow = [texts[0], 'No', texts[1]]
             else:
                 myrow = [texts[0], texts[1][:2], texts[1]]
@@ -67,9 +68,8 @@ for i in lst_isbn:
             myrow = ['x', 'x', 'x']
         card.append(myrow)
 
-    print card
+    #print card
 
-'''
 # подключаемся к базе данных (не забываем указать кодировку, а то в базу запишутся иероглифы)
     db = MySQLdb.connect(host="localhost", user="marc", passwd="123", db="marc", use_unicode=True, charset='utf8') #charset='utf-8'
 # формируем курсор, с помощью которого можно исполнять SQL-запросы
@@ -94,4 +94,3 @@ for i in lst_isbn:
 
 # закрываем соединение с базой данных
     db.close()
-# coding: utf-8 '''
