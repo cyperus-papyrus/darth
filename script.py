@@ -5,27 +5,35 @@ import csv
 import xml.etree.ElementTree as ET
 import argparse
 import MySQLdb
+import time
+import string
 
 parser = argparse.ArgumentParser(description='Выделяем isbn')
 parser.add_argument('--in',required=True,dest='InFileName',help='укажите имя входного файла')
 args = parser.parse_args()
 #print (args.InFileName)
 
-lst = []
-with open(args.InFileName) as f:
-    reader = csv.reader(f, delimiter=';')
-    for row in reader:
-        lst.append(row)
+# распаковка строки, в которой поля записаны с разделителем ";"
+def unpack_line(line):
+    line = re.sub('\r\n', '', line,0, re.M )
+    line = re.sub('"', '', line,0, re.M )
+    line = re.sub(u'\([.*?]\)', '', line,0, re.M )
+    line = re.sub(u'^\s+', '', line,0, re.M )
+    line = re.sub(u'\s+$', '', line,0, re.M )
+    els = string.split(line, ", ")
+    return els
 
-n = 0
-for i in lst:
-    lst[n] = i[2:]
-    n = n + 1
-#print(lst)
+# открываем исходный csv-файл
+f = open(args.InFileName, "r")
+# представляем его в виде массива строк
+lines = f.readlines()
 
-import operator
-listmerge = lambda s: reduce(operator.iadd, s, [])
-lst_isbn = listmerge(lst)
+lst_isbn = []
+
+for line in lines:
+    els = unpack_line(line)
+    lst_isbn.append(els)
+#print lst_isbn
 
 n = 0
 for i in lst_isbn:
@@ -46,36 +54,44 @@ for i in lst_isbn:
     t3 = re.sub(u'(<br\s{0,3}/>)', '', t3,0, re.M )    
     n = n + 1
     
-#with open('www.txt', 'w') as f1:
-#    f1.write(t3)
 	
-tree = ET.fromstring(t3)	
+tree = ET.fromstring(t3)
+
+#формируем список из списков с одной карточкой 
+card = []
 
 for child in tree.findall('tr'):
     for child2 in child.findall('td'):
-		print child2.text
+        myrow = child.text.split('\n')
+        if myrow[0] < 010:
+            myrow1 = [myrow[0], 'No', myrow[1]]
+        else:
+            myrow1 = [myrow[0], myrow[1][:2], myrow[1]]
+        card.append(myrow1)
 
-
-#формируем список из списков с одной карточкой 
-
-card = []
+#print card
 
 # подключаемся к базе данных (не забываем указать кодировку, а то в базу запишутся иероглифы)
-db = MySQLdb.connect(host="localhost", user="root", passwd="123", db="bookcards", charset='utf8')
+db = MySQLdb.connect(host="localhost", user="marc", passwd="123", db="marc", use_unicode=True, charset='utf8') #charset='utf-8'
 # формируем курсор, с помощью которого можно исполнять SQL-запросы
+db.set_character_set('utf8')
 cursor = db.cursor()
 
+cursor.execute("SET NAMES utf8;")
+cursor.execute("SET CHARACTER SET utf8")
+cursor.execute("SET character_set_connection=utf8")
+n = 0
 for element in card:
-        # подставляем эти данные в SQL-запрос
-        sql = """INSERT INTO bookcards(field, marker, info)
+# подставляем эти данные в SQL-запрос
+    sql = u"""INSERT INTO cards(field, marker, info)
         VALUES ('%(field)s', '%(marker)s', '%(info)s')
-        """%{"field":card[0], "marker":card[1], "info":card[2]}
-        # исполняем SQL-запрос
-        cursor.execute(sql)
-        # применяем изменения к базе данных
-        db.commit()
+        """%{"field":card[n][0], "marker":card[n][1], "info":card[n][2]}
+# исполняем SQL-запрос
+    print sql
+    cursor.execute(sql)
+# применяем изменения к базе данных
+    db.commit()
+    n = n + 1
 
 # закрываем соединение с базой данных
 db.close()
-# закрываем файл
-f.close()
