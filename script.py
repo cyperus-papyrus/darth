@@ -66,6 +66,7 @@ for isbn in  lst_isbn:
             break
         except AttributeError:
             print isbn, u' не могу найти! ', http_attempts
+            time.sleep(1.1)
     else:    
         print isbn, u' не могу найти!'
         sql = u"""INSERT INTO cards(isbn, field, marker, info)
