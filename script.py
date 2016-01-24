@@ -84,7 +84,7 @@ for isbn in  lst_isbn:
     t3 = re.sub(u'\n\n+', '\n', t3, 0, re.M)
     t3 = re.sub(u'(<strong>)|(</strong>)', '', t3, 0, re.M)
     t3 = re.sub(u'(<br\s{0,3}/>)', '', t3, 0, re.M)
-    t3 = re.sub(u'(<)(?P<digits>\d{0,13})(>)', '&lt;\g<digits>&gt;', t3, 0, re.M)
+    t3 = re.sub(u'(?P<digits>\d{0,13}\/?\+?\d{0,13})(>)', '&lt;\g<digits>&gt;', t3, 0, re.M)
     t3 = re.sub(u'LDR', '000', t3, 0, re.M)
     t3 = re.sub(u'<td colspan="2"></td>', '', t3, 0, re.M)
     with open('t3.txt','w') as f:
