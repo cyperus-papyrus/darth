@@ -51,20 +51,32 @@ n = 0
 for isbn in  lst_isbn:
     url = 'http://old.rsl.ru/view.jsp?f=7&t=3&v0=' + str(isbn) + '&f=1003&t=1&v1=&f=4&t=2&v2=&f=21&t=3&v3=&f=1016&t=3&v4=&f=1016&t=3&v5=&cc=a1&v=marc&s=2&ce=4'
 #url = 'http://old.rsl.ru/view.jsp?f=7&t=3&v0=978-5-9922-0646-3&f=1003&t=1&v1=&f=4&t=2&v2=&f=21&t=3&v3=&f=1016&t=3&v4=&f=1016&t=3&v5=&cc=a1&v=marc&s=2&ce=4'
-#    for http_attempts in range(1, 5):
+    for http_attempts in range(1, 5):
 #        try:
-    data = urllib.urlopen(url).read() #.decode('utf-8') #.encode('utf-8')
+        data = urllib.urlopen(url).read() #.decode('utf-8') #.encode('utf-8')
 #            break
 #        except 
 #    else:
 #        print "Network global trouble"
 #        exit()
 
-    table = re.search('<span class="fcard"><b>.+?(<table.*?</table>)', data, re.DOTALL)
-    try:
-        t3 = ''.join(table.groups())
-    except AttributeError:
-        t3 = 'xxx'
+        table = re.search('<span class="fcard"><b>.+?(<table.*?</table>)', data, re.DOTALL)
+        try:
+            t3 = ''.join(table.groups())
+            break
+        except AttributeError:
+            print isbn, u' не могу найти! ', http_attempts
+    else:    
+        print isbn, u' не могу найти!'
+        sql = u"""INSERT INTO cards(isbn, field, marker, info)
+        VALUES ('%(isbn)s', '%(field)s', '%(marker)s', '%(info)s')
+        """ % {"isbn":isbn, "field": u'xxx', "marker": '', "info": ''}
+        # исполняем SQL-запрос
+        #print sql
+        cursor.execute(sql)
+        # применяем изменения к базе данных
+        db.commit()
+        continue
     t3 = re.sub('bgcolor="?#EDEBE6"?', '', t3, 0, re.M)
     t3 = re.sub('\r', '', t3, 0, re.M)
     t3 = re.sub(u'^\s+$', '', t3, 0, re.M)
