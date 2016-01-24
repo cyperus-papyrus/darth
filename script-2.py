@@ -52,7 +52,6 @@ for i in lst_isbn:
 	t3 = re.sub(u'(<strong>)|(</strong>)', '', t3, 0, re.M)
 	t3 = re.sub(u'(<br\s{0,3}/>)', '', t3, 0, re.M)
 	t3 = re.sub(u'LDR', '000', t3, 0, re.M)
-	t3 = re.sub(u'<td colspan="2"></td>', '', t3, 0, re.M)
 	tree = ET.fromstring(t3)
 	#формируем список из списков с одной карточкой
 	card = []
@@ -88,7 +87,7 @@ for i in lst_isbn:
         VALUES ('%(isbn)s', '%(field)s', '%(marker)s', '%(info)s')
         """ % {"isbn":lst_isbn[n], "field": card[q][0], "marker": card[q][1], "info": card[q][2]}
 		# исполняем SQL-запрос
-		#print sql
+		print sql
 		cursor.execute(sql)
 		# применяем изменения к базе данных
 		db.commit()
