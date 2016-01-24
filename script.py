@@ -21,8 +21,8 @@ def unpack_line(line):
     line = re.sub(u'^\s+', '', line, 0, re.M)
     line = re.sub(u'\s+$', '', line, 0, re.M)
     els = string.split(line, ", ")
-        if( re.search(u'\d+',line) == None):
-          els = []   
+    if( re.search(u'\d+',line) is None):
+       els = []   
     return els
 
 # открываем исходный csv-файл
@@ -74,9 +74,9 @@ for isbn in  lst_isbn:
     t3 = re.sub(u'(<)(?P<digits>\d{0,13})(>)', '&lt;\g<digits>&gt;', t3, 0, re.M)
     t3 = re.sub(u'LDR', '000', t3, 0, re.M)
     t3 = re.sub(u'<td colspan="2"></td>', '', t3, 0, re.M)
-        with open('t3.txt','w') as f:
-           f.write(t3)
-           f.close
+    with open('t3.txt','w') as f:
+        f.write(t3)
+        f.close
     tree = ET.fromstring(t3)
     #формируем список из списков с одной карточкой
     card = []
@@ -89,14 +89,15 @@ for isbn in  lst_isbn:
                 myrow = [texts[0], '', texts[1]]
             else:
                 myrow = [texts[0], texts[1][:2], texts[1]]
-                else: continue
+        else: 
+            continue
         card.append(myrow)
 
         #print card
 
     q = 0
-        if args.verbose:
-            print isbn, n
+    if args.verbose:
+        print isbn, n
     for element in card:
     # подставляем эти данные в SQL-запрос
         sql = u"""INSERT INTO cards(isbn, field, marker, info)
