@@ -115,10 +115,10 @@ for isbn in  lst_isbn:
     # подставляем эти данные в SQL-запрос
         sql = u"""INSERT INTO cards(isbn, field, marker, info)
         VALUES ('%(isbn)s', '%(field)s', '%(marker)s', '%(info)s')
-        """ % {"isbn":isbn, "field": card[q][0], "marker": card[q][1], "info": card[q][2]}
+        """ 
         # исполняем SQL-запрос
         #print sql
-        cursor.execute(sql)
+        cursor.execute(sql,{"isbn":isbn, "field": card[q][0], "marker": card[q][1], "info": card[q][2]})
         # применяем изменения к базе данных
         db.commit()
         q = q + 1
