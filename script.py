@@ -43,7 +43,7 @@ for i in lst_isbn:
     try:
         t3 = ''.join(table.groups())
     except AttributeError:
-        t3 = 'x'
+        t3 = 'xxx'
     t3 = re.sub('bgcolor="?#EDEBE6"?', '', t3,0, re.M )
     t3 = re.sub('\r', '', t3,0, re.M )
     t3 = re.sub(u'^\s+$', '', t3,0, re.M )
