@@ -114,7 +114,7 @@ for isbn in  lst_isbn:
     for element in card:
     # подставляем эти данные в SQL-запрос
         sql = u"""INSERT INTO cards(isbn, field, marker, info)
-        VALUES ('%(isbn)s', '%(field)s', '%(marker)s', '%(info)s')
+        VALUES (%(isbn)s, %(field)s, %(marker)s, %(info)s)
         """ 
         # исполняем SQL-запрос
         #print sql
