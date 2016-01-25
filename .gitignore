@@ -1,3 +1,4 @@
+.idea/
 *.py~
 #ignore thumbnails created by windows
 Thumbs.db
