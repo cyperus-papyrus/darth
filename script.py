@@ -20,7 +20,8 @@ def unpack_line(line):
     line = re.sub(u'\([.*?]\)', '', line, 0, re.M)
     line = re.sub(u'^\s+', '', line, 0, re.M)
     line = re.sub(u'\s+$', '', line, 0, re.M)
-    els = string.split(line, ", ")
+    line = re.sub(u', ', ',', line, 0, re.M)
+    els = string.split(line, ",")
     if( re.search(u'\d+',line) is None):
        els = []   
     return els
