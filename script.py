@@ -73,11 +73,12 @@ for isbn in  lst_isbn:
     else:    
         print isbn, u' не могу найти!'
         sql = u"""INSERT IGNORE INTO cards(isbn, field, marker, info)
-        VALUES ('%(isbn)s', '%(field)s', '%(marker)s', '%(info)s')
-        """ % {"isbn":isbn, "field": u'xxx', "marker": '', "info": ''}
+        VALUES (%(isbn)s, %(field)s, %(marker)s, %(info)s)
+        """ 
         # исполняем SQL-запрос
         #print sql
-        cursor.execute(sql)
+        cursor.execute(sql, {"isbn":isbn, "field": u'xxx', "marker": '', "info": ''})
+
         # применяем изменения к базе данных
         db.commit()
         continue
@@ -89,6 +90,7 @@ for isbn in  lst_isbn:
     t3 = re.sub(u'(<br\s{0,3}/>)', '', t3, 0, re.M)
     t3 = re.sub(u'(<)(?P<digits>\d{0,13}\/?\+?\d{0,13})(>)', '&lt;\g<digits>&gt;', t3, 0, re.M)
     t3 = re.sub('\x00', '', t3, 0, re.M)
+    t3 = re.sub('& ', '&amp; ', t3, 0, re.M)
     t3 = re.sub(u'LDR', '000', t3, 0, re.M)
     t3 = re.sub(u'<td colspan="2"></td>', '', t3, 0, re.M)
     with open('t3.txt','w') as f:
@@ -128,7 +130,7 @@ for isbn in  lst_isbn:
         q = q + 1
 
     n = n + 1
-    time.sleep(2.2)
+    time.sleep(1.1)
 
 # закрываем соединение с базой данных
 db.close()
