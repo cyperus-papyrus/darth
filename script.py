@@ -70,7 +70,7 @@ for isbn in  lst_isbn:
             time.sleep(1.1)
     else:    
         print isbn, u' не могу найти!'
-        sql = u"""INSERT INTO cards(isbn, field, marker, info)
+        sql = u"""INSERT IGNORE INTO cards(isbn, field, marker, info)
         VALUES ('%(isbn)s', '%(field)s', '%(marker)s', '%(info)s')
         """ % {"isbn":isbn, "field": u'xxx', "marker": '', "info": ''}
         # исполняем SQL-запрос
@@ -114,7 +114,7 @@ for isbn in  lst_isbn:
         print isbn, n
     for element in card:
     # подставляем эти данные в SQL-запрос
-        sql = u"""INSERT INTO cards(isbn, field, marker, info)
+        sql = u"""INSERT IGNORE INTO cards(isbn, field, marker, info)
         VALUES (%(isbn)s, %(field)s, %(marker)s, %(info)s)
         """ 
         # исполняем SQL-запрос
