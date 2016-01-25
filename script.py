@@ -47,11 +47,13 @@ cursor = db.cursor()
 cursor.execute("SET NAMES utf8;")
 cursor.execute("SET CHARACTER SET utf8")
 cursor.execute("SET character_set_connection=utf8")
+sql = u"""INSERT IGNORE INTO cards(isbn, field, marker, info)
+        VALUES (%(isbn)s, %(field)s, %(marker)s, %(info)s)
+        """ 
 
 n = 0
 for isbn in  lst_isbn:
     url = 'http://old.rsl.ru/view.jsp?f=7&t=3&v0=' + str(isbn) + '&f=1003&t=1&v1=&f=4&t=2&v2=&f=21&t=3&v3=&f=1016&t=3&v4=&f=1016&t=3&v5=&cc=a1&v=marc&s=2&ce=4'
-#url = 'http://old.rsl.ru/view.jsp?f=7&t=3&v0=978-5-9922-0646-3&f=1003&t=1&v1=&f=4&t=2&v2=&f=21&t=3&v3=&f=1016&t=3&v4=&f=1016&t=3&v5=&cc=a1&v=marc&s=2&ce=4'
     if args.verbose:
         print url 
     for http_attempts in range(1, 5):
@@ -72,9 +74,6 @@ for isbn in  lst_isbn:
             time.sleep(1.1)
     else:    
         print isbn, u' не могу найти!'
-        sql = u"""INSERT IGNORE INTO cards(isbn, field, marker, info)
-        VALUES (%(isbn)s, %(field)s, %(marker)s, %(info)s)
-        """ 
         # исполняем SQL-запрос
         #print sql
         cursor.execute(sql, {"isbn":isbn, "field": u'xxx', "marker": '', "info": ''})
@@ -118,10 +117,6 @@ for isbn in  lst_isbn:
     if args.verbose:
         print isbn, n
     for element in card:
-    # подставляем эти данные в SQL-запрос
-        sql = u"""INSERT IGNORE INTO cards(isbn, field, marker, info)
-        VALUES (%(isbn)s, %(field)s, %(marker)s, %(info)s)
-        """ 
         # исполняем SQL-запрос
         #print sql
         cursor.execute(sql,{"isbn":isbn, "field": card[q][0], "marker": card[q][1], "info": card[q][2]})
