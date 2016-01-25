@@ -52,6 +52,8 @@ n = 0
 for isbn in  lst_isbn:
     url = 'http://old.rsl.ru/view.jsp?f=7&t=3&v0=' + str(isbn) + '&f=1003&t=1&v1=&f=4&t=2&v2=&f=21&t=3&v3=&f=1016&t=3&v4=&f=1016&t=3&v5=&cc=a1&v=marc&s=2&ce=4'
 #url = 'http://old.rsl.ru/view.jsp?f=7&t=3&v0=978-5-9922-0646-3&f=1003&t=1&v1=&f=4&t=2&v2=&f=21&t=3&v3=&f=1016&t=3&v4=&f=1016&t=3&v5=&cc=a1&v=marc&s=2&ce=4'
+    if args.verbose:
+        print url 
     for http_attempts in range(1, 5):
 #        try:
         data = urllib.urlopen(url).read() #.decode('utf-8') #.encode('utf-8')
@@ -86,6 +88,7 @@ for isbn in  lst_isbn:
     t3 = re.sub(u'(<strong>)|(</strong>)', '', t3, 0, re.M)
     t3 = re.sub(u'(<br\s{0,3}/>)', '', t3, 0, re.M)
     t3 = re.sub(u'(<)(?P<digits>\d{0,13}\/?\+?\d{0,13})(>)', '&lt;\g<digits>&gt;', t3, 0, re.M)
+    t3 = re.sub('\x00', '', t3, 0, re.M)
     t3 = re.sub(u'LDR', '000', t3, 0, re.M)
     t3 = re.sub(u'<td colspan="2"></td>', '', t3, 0, re.M)
     with open('t3.txt','w') as f:
