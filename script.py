@@ -128,3 +128,18 @@ for isbn in  lst_isbn:
 
 # закрываем соединение с базой данных
 db.close()
+
+
+"""
+CREATE TABLE `cards` (
+	`isbn` VARCHAR(50) NULL DEFAULT NULL,
+	`field` VARCHAR(4) NULL DEFAULT NULL,
+	`marker` VARCHAR(2) NULL DEFAULT NULL,
+	`info` TEXT NULL,
+	UNIQUE INDEX `Индекс 2` (`isbn`, `field`, `marker`, `info`(100)),
+	INDEX `Индекс 1` (`isbn`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+""""
