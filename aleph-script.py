@@ -69,7 +69,7 @@ cursor = db.cursor()
 cursor.execute("SET NAMES utf8;")
 cursor.execute("SET CHARACTER SET utf8")
 cursor.execute("SET character_set_connection=utf8")
-sql = u"""INSERT IGNORE INTO cards(isbn, field, info)
+sql = u"""INSERT IGNORE INTO aleph-marc(isbn, field, info)
         VALUES (%(isbn)s, %(field)s, %(info)s)
         """ 
 
@@ -98,7 +98,7 @@ for isbn in  lst_isbn:
         print url 
     for http_attempts in range(1, 5):
         data = urllib.urlopen(url).read()
-        table = re.search('<span class="fcard"><b>.+?(<table.*?</table>)', data, re.DOTALL)
+        table = re.search('(<table cellspacing=2 border=0 width=100%>.*?</table>)', data, re.DOTALL)
         try:
             t3 = ''.join(table.groups())
             break
@@ -123,6 +123,7 @@ for isbn in  lst_isbn:
     t3 = re.sub(u'\s+$', '', t3, 0, re.M)
     t3 = re.sub('\r', '', t3, 0, re.M)
     t3 = re.sub(u'^\s+$', '', t3, 0, re.M)
+    t3 = re.sub(u'^/(\s)/+', ' ', t3, 0, re.M)
     t3 = re.sub(u'\n\n+', '\n', t3, 0, re.M)
     t3 = re.sub(u'(<br\s{0,3}/>)', '', t3, 0, re.M)
     t3 = re.sub(u'&nbsp;', ' ', t3, 0, re.M)
@@ -136,8 +137,8 @@ for isbn in  lst_isbn:
     for child in tree.findall('tr'):
         texts = [child2.text for child2 in child.findall('td')]
         card.append(texts)
-
-    q = 0
+print card
+q = 0
     if args.verbose:
         print isbn, n
     for element in card:
@@ -156,7 +157,7 @@ for isbn in  lst_isbn:
 db.close()
 
 """
-CREATE TABLE `aleph-cards` (
+CREATE TABLE `aleph-marc` (
 	`isbn` VARCHAR(50) NULL DEFAULT NULL,
 	`field` VARCHAR(4) NULL DEFAULT NULL,
 	`info` TEXT NULL,
