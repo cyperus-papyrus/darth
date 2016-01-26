@@ -69,7 +69,7 @@ cursor = db.cursor()
 cursor.execute("SET NAMES utf8;")
 cursor.execute("SET CHARACTER SET utf8")
 cursor.execute("SET character_set_connection=utf8")
-sql = u"""INSERT IGNORE INTO aleph-marc(isbn, field, info)
+sql = u"""INSERT IGNORE INTO aleph(isbn, field, info)
         VALUES (%(isbn)s, %(field)s, %(info)s)
         """ 
 
@@ -137,8 +137,8 @@ for isbn in  lst_isbn:
     for child in tree.findall('tr'):
         texts = [child2.text for child2 in child.findall('td')]
         card.append(texts)
-print card
-q = 0
+    print card
+    q = 0
     if args.verbose:
         print isbn, n
     for element in card:
@@ -157,7 +157,7 @@ q = 0
 db.close()
 
 """
-CREATE TABLE `aleph-marc` (
+CREATE TABLE `aleph` (
 	`isbn` VARCHAR(50) NULL DEFAULT NULL,
 	`field` VARCHAR(4) NULL DEFAULT NULL,
 	`info` TEXT NULL,
