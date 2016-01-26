@@ -76,7 +76,7 @@ sql = u"""INSERT IGNORE INTO aleph(isbn, field, info)
 n = 0
 for isbn in  lst_isbn:
     # урл к страничке, откуда будем тянуть ссылки
-    BASE_URL = 'http://aleph.rsl.ru/F/P32QYAVRY2NY8XTKBQJXAV52MQLMQXIDT4GTFBPFMNG4J893V7-15392?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
+    BASE_URL = 'http://aleph.rsl.ru/F/VQ6P4P4Y4SBVBYRL9588YTAM7SVXG4YLAJQ7ERTK14Y5LBJTRG-05254?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
     # создаём экземпляр класса UrlFinder()
     parser = UrlFinder()
     # вызываем метод feed, который передаёт текст в parser. 
