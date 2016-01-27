@@ -17,7 +17,7 @@ args = parser.parse_args()
 # распаковка строки, в которой поля записаны с разделителем ";"
 def unpack_line(line):
     print line
-    line = u'%s'% line;
+    line = unicode(line,'utf-8')
     line = re.sub('\r\n', '', line, 0, re.M)
     line = re.sub('"', '', line, 0, re.M)
     line = re.sub(u', ', ',', line, 0, re.M)
