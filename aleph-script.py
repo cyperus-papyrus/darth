@@ -17,17 +17,17 @@ args = parser.parse_args()
 # распаковка строки, в которой поля записаны с разделителем ";"
 def unpack_line(line):
     print line
-    line = u'%s'% line;
-    line = re.sub('\r\n', '', line, 0, re.M)
-    line = re.sub('"', '', line, 0, re.M)
+    line = unicode(line,'utf-8')
+    line = re.sub('\r\n', u'', line, 0, re.M)
+    line = re.sub('"', u'', line, 0, re.M)
     line = re.sub(u', ', ',', line, 0, re.M)
-    line = re.sub(u'[()\.А-Яа-яЁёI ,:;+\[\]]+', ',', line, 0, re.M)
-    line = re.sub(u'\.', ',', line, 0, re.M)
-    line = re.sub(u',+$', '', line, 0, re.M)
-    line = re.sub(u',{2,}', ',', line, 0, re.M)
-    line = re.sub(u'^\s+', '', line, 0, re.M)
-    line = re.sub(u'\s+$', '', line, 0, re.M)
-    els = string.split(line, ",")
+    line = re.sub(u'[()\.А-Яа-яЁёI ,:;+\[\]]+', u',', line, 0, re.M)
+    line = re.sub(u'\.', u',', line, 0, re.M)
+    line = re.sub(u',+$', u'', line, 0, re.M)
+    line = re.sub(u',{2,}', u',', line, 0, re.M)
+    line = re.sub(u'^\s+', u'', line, 0, re.M)
+    line = re.sub(u'\s+$', u'', line, 0, re.M)
+    els = string.split(line, ',')
     if( re.search(u'\d+',line) is None):
        els = []
     print '==>'+' '.join(els)
