@@ -60,8 +60,8 @@ lst_isbn = []
 
 for line in lines:
     lst_isbn+= unpack_line(line)
-with open('lst_isbn.txt','w') as f:
-        f.write(lst_isbn)
+    with open('lst_isbn.txt','wa') as f:
+        f.write(line)
         f.close
 
 # подключаемся к базе данных (не забываем указать кодировку, а то в базу запишутся иероглифы)
@@ -74,7 +74,7 @@ cursor = db.cursor()
 cursor.execute("SET NAMES utf8;")
 cursor.execute("SET CHARACTER SET utf8")
 cursor.execute("SET character_set_connection=utf8")
-sql = u"""INSERT IGNORE INTO aleph-marc(isbn, field, info)
+sql = u"""INSERT IGNORE INTO aleph(isbn, field, info)
         VALUES (%(isbn)s, %(field)s, %(info)s)
         """ 
 
@@ -157,13 +157,13 @@ for isbn in  lst_isbn:
         q = q + 1
 
     n = n + 1
-    time.sleep(2.2)
+    time.sleep(1)
 
 # закрываем соединение с базой данных
 db.close()
 
 """
-CREATE TABLE `aleph-marc` (
+CREATE TABLE `aleph` (
 	`isbn` VARCHAR(50) NULL DEFAULT NULL,
 	`field` VARCHAR(4) NULL DEFAULT NULL,
 	`info` TEXT NULL,
