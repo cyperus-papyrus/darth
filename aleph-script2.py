@@ -130,6 +130,7 @@ for isbn in  lst_isbn:
     t3 = re.sub(u'\n\n+', '\n', t3, 0, re.M)
     t3 = re.sub(u'(<br\s{0,3}/>)', '', t3, 0, re.M)
     t3 = re.sub(u'&nbsp;', ' ', t3, 0, re.M)
+    t3 = re.sub(u'LDR', '000', t3,0, re.M)
     with open('t3.txt','w') as f:
         f.write(t3)
         f.close
@@ -154,7 +155,7 @@ for isbn in  lst_isbn:
         q = q + 1
 
     n = n + 1
-    time.sleep(1)
+    time.sleep(2.2)
 
 # закрываем соединение с базой данных
 db.close()
