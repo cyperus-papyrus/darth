@@ -19,9 +19,14 @@ def unpack_line(line):
     line = re.sub('\r\n', '', line, 0, re.M)
     line = re.sub('"', '', line, 0, re.M)
     line = re.sub(u'\([.*?]\)', '', line, 0, re.M)
+    line = re.sub(u', ', ',', line, 0, re.M)
+    line = re.sub(u' [-()\.А-Яа-яЁё ,:;+\[\]]*', ',', line, 0, re.M)
+    line = re.sub(u' [-()\.А-Яа-яЁёI ,:;+\[\]]*', ',', line, 0, re.M)
+    line = re.sub(u'. ', ',', line, 0, re.M)
+    line = re.sub(u',+$', '', line, 0, re.M)
+    line = re.sub(u',{2,}', ',', line, 0, re.M)
     line = re.sub(u'^\s+', '', line, 0, re.M)
     line = re.sub(u'\s+$', '', line, 0, re.M)
-    line = re.sub(u', ', ',', line, 0, re.M)
     els = string.split(line, ",")
     if( re.search(u'\d+',line) is None):
        els = []   
@@ -45,8 +50,6 @@ class UrlFinder(HTMLParser):
             try:
                 # записываем значение аттрибута href в список-свойство links нашего класса
                 self.links.append(attrs['href'])
-            except:
-                pass
 
 # открываем исходный csv-файл
 f = open(args.InFileName, "r")
