@@ -60,9 +60,6 @@ lst_isbn = []
 
 for line in lines:
     lst_isbn+= unpack_line(line)
-    with open('lst_isbn.txt','wa') as f:
-        f.write(line)
-        f.close
 
 # подключаемся к базе данных (не забываем указать кодировку, а то в базу запишутся иероглифы)
 db = MySQLdb.connect(host="localhost", user="marc", passwd="123", db="marc", use_unicode=True,
@@ -81,23 +78,23 @@ sql = u"""INSERT IGNORE INTO aleph(isbn, field, info)
 n = 0
 for isbn in  lst_isbn:
     # урл к страничке, откуда будем тянуть ссылки
-    BASE_URL = 'http://aleph.rsl.ru/JS6L9T5BA15ANLHE38MLVU1YAHDE6KBBDYUP2RNDJ5NY7RUSNY-00661?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
+    BASE_URL = 'http://aleph.rsl.ru/F/JS6L9T5BA15ANLHE38MLVU1YAHDE6KBBDYUP2RNDJ5NY7RUSNY-01364?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=50&y=10'
     # создаём экземпляр класса UrlFinder()
     parser = UrlFinder()
     # вызываем метод feed, который передаёт текст в parser. 
     # Сам текст получаем по ссылке с помощью функций библиотеки urllib
     parser.feed(urllib.urlopen(BASE_URL).read())
     #теперь считаем количество найденных ссылок (просто подсчитывая количество элементов в links нашго экзепляра класса UrlFinder())
-    for link in parser.links:
-        if 'format' in link:
-            url = link
-            break
-        else:    
-            print isbn, u' не могу найти такой isbn!'
-            cursor.execute(sql,{"isbn":isbn, "field": u'xxx', "info": ''})
+    #for link in parser.links:
+    if 'format' in parser.links[17]:
+        url = parser.links[17]
+        continue
+    else:    
+        print isbn, u' не могу найти такой isbn!'
+        cursor.execute(sql,{"isbn":isbn, "field": u'xxx', "info": ''})
         # применяем изменения к базе данных
-            db.commit()
-            continue
+        db.commit()
+        continue
 
     url = url.replace('format=999', 'format=001')
     if args.verbose:
@@ -143,7 +140,7 @@ for isbn in  lst_isbn:
     for child in tree.findall('tr'):
         texts = [child2.text for child2 in child.findall('td')]
         card.append(texts)
-    print card
+    #print card
     q = 0
     if args.verbose:
         print isbn, n
