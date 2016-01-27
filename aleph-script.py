@@ -86,12 +86,7 @@ for isbn in  lst_isbn:
     for link in parser.links:
         if 'format' in link:
             url = link
-        else:    
-            print isbn, u' не могу найти такой isbn!'
-            cursor.execute(sql,{"isbn":isbn, "field": u'xxx', "info": ''})
-        # применяем изменения к базе данных
-            db.commit()
-            continue
+            break
 
     url = url.replace('format=999', 'format=001')
     if args.verbose:
@@ -127,6 +122,7 @@ for isbn in  lst_isbn:
     t3 = re.sub(u'\n\n+', '\n', t3, 0, re.M)
     t3 = re.sub(u'(<br\s{0,3}/>)', '', t3, 0, re.M)
     t3 = re.sub(u'&nbsp;', ' ', t3, 0, re.M)
+    t3 = re.sub(u'LDR', '000', t3,0, re.M)
     with open('t3.txt','w') as f:
         f.write(t3)
         f.close
@@ -137,7 +133,7 @@ for isbn in  lst_isbn:
     for child in tree.findall('tr'):
         texts = [child2.text for child2 in child.findall('td')]
         card.append(texts)
-    print card
+    #print card
     q = 0
     if args.verbose:
         print isbn, n
