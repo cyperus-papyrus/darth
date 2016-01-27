@@ -18,10 +18,9 @@ args = parser.parse_args()
 def unpack_line(line):
     line = re.sub('\r\n', '', line, 0, re.M)
     line = re.sub('"', '', line, 0, re.M)
-    line = re.sub(u'\([.*?]\)', '', line, 0, re.M)
     line = re.sub(u', ', ',', line, 0, re.M)
-    line = re.sub(u' [-()\.А-Яа-яЁёI ,:;+\[\]]*', ',', line, 0, re.M)
-    line = re.sub(u'. ', ',', line, 0, re.M)
+    line = re.sub(u'[()\.А-Яа-яЁёI ,:;+\[\]]+', ',', line, 0, re.M)
+    line = re.sub(u'\.', ',', line, 0, re.M)
     line = re.sub(u',+$', '', line, 0, re.M)
     line = re.sub(u',{2,}', ',', line, 0, re.M)
     line = re.sub(u'^\s+', '', line, 0, re.M)
@@ -77,6 +76,8 @@ sql = u"""INSERT IGNORE INTO aleph(isbn, field, info)
 
 n = 0
 for isbn in  lst_isbn:
+    if (isbn == '' ):
+       continue
     # урл к страничке, откуда будем тянуть ссылки
     BASE_URL = 'http://aleph.rsl.ru/F/JS6L9T5BA15ANLHE38MLVU1YAHDE6KBBDYUP2RNDJ5NY7RUSNY-00661?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
     # создаём экземпляр класса UrlFinder()
@@ -89,12 +90,12 @@ for isbn in  lst_isbn:
         if 'format' in link:
             url = link
             break
-        else:    
-            print isbn, u' не могу найти такой isbn!'
-            cursor.execute(sql,{"isbn":isbn, "field": u'xxx', "info": ''})
+    else:    
+        print isbn, u' не могу найти такой isbn!'
+        cursor.execute(sql,{"isbn":isbn, "field": u'xxx', "info": ''})
         # применяем изменения к базе данных
-            db.commit()
-            continue
+        db.commit()
+        continue
 
     url = url.replace('format=999', 'format=001')
     if args.verbose:
@@ -116,7 +117,6 @@ for isbn in  lst_isbn:
         # применяем изменения к базе данных
         db.commit()
         continue
-    t3 = ''.join(table.groups())
     t3 = re.sub(' class=td1 id=bold width="10%" nowrap', '', t3, 0, re.M)
     t3 = re.sub(' cellspacing=2 border=0 width=100%', '', t3, 0, re.M)
     t3 = re.sub(' class=td1', '', t3, 0, re.M)
@@ -141,7 +141,7 @@ for isbn in  lst_isbn:
     for child in tree.findall('tr'):
         texts = [child2.text for child2 in child.findall('td')]
         card.append(texts)
-    #print card
+    #print "\n".join(card)
     q = 0
     if args.verbose:
         print isbn, n
@@ -155,7 +155,7 @@ for isbn in  lst_isbn:
         q = q + 1
 
     n = n + 1
-    time.sleep(2.2)
+    time.sleep(1.2)
 
 # закрываем соединение с базой данных
 db.close()
