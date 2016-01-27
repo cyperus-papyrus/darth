@@ -46,9 +46,9 @@ class UrlFinder(HTMLParser):
         attrs = dict(attrs)
         # если находим тег 'a'
         if 'a' == tag:
-            try:
+            #try:
                 # записываем значение аттрибута href в список-свойство links нашего класса
-                self.links.append(attrs['href'])
+            self.links.append(attrs['href'])
 
 # открываем исходный csv-файл
 f = open(args.InFileName, "r")
