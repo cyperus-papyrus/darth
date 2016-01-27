@@ -20,7 +20,6 @@ def unpack_line(line):
     line = re.sub('"', '', line, 0, re.M)
     line = re.sub(u'\([.*?]\)', '', line, 0, re.M)
     line = re.sub(u', ', ',', line, 0, re.M)
-    line = re.sub(u' [-()\.А-Яа-яЁё ,:;+\[\]]*', ',', line, 0, re.M)
     line = re.sub(u' [-()\.А-Яа-яЁёI ,:;+\[\]]*', ',', line, 0, re.M)
     line = re.sub(u'. ', ',', line, 0, re.M)
     line = re.sub(u',+$', '', line, 0, re.M)
@@ -61,6 +60,9 @@ lst_isbn = []
 
 for line in lines:
     lst_isbn+= unpack_line(line)
+with open('lst_isbn.txt','w') as f:
+        f.write(lst_isbn)
+        f.close
 
 # подключаемся к базе данных (не забываем указать кодировку, а то в базу запишутся иероглифы)
 db = MySQLdb.connect(host="localhost", user="marc", passwd="123", db="marc", use_unicode=True,
@@ -89,6 +91,7 @@ for isbn in  lst_isbn:
     for link in parser.links:
         if 'format' in link:
             url = link
+            break
         else:    
             print isbn, u' не могу найти такой isbn!'
             cursor.execute(sql,{"isbn":isbn, "field": u'xxx', "info": ''})
@@ -107,7 +110,7 @@ for isbn in  lst_isbn:
             break
         except AttributeError:
             print isbn, u' не могу найти карточку! ', http_attempts
-            time.sleep(1.1)
+            time.sleep(0.5)
     else:    
         print isbn, u' не могу найти!'
         # исполняем SQL-запрос
