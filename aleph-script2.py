@@ -60,9 +60,6 @@ lst_isbn = []
 
 for line in lines:
     lst_isbn+= unpack_line(line)
-    with open('lst_isbn.txt','wa') as f:
-        f.write(line)
-        f.close
 
 # подключаемся к базе данных (не забываем указать кодировку, а то в базу запишутся иероглифы)
 db = MySQLdb.connect(host="localhost", user="marc", passwd="123", db="marc", use_unicode=True,
@@ -81,7 +78,7 @@ sql = u"""INSERT IGNORE INTO aleph(isbn, field, info)
 n = 0
 for isbn in  lst_isbn:
     # урл к страничке, откуда будем тянуть ссылки
-    BASE_URL = 'http://aleph.rsl.ru/JS6L9T5BA15ANLHE38MLVU1YAHDE6KBBDYUP2RNDJ5NY7RUSNY-00661?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
+    BASE_URL = 'http://aleph.rsl.ru/F/JS6L9T5BA15ANLHE38MLVU1YAHDE6KBBDYUP2RNDJ5NY7RUSNY-00661?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
     # создаём экземпляр класса UrlFinder()
     parser = UrlFinder()
     # вызываем метод feed, который передаёт текст в parser. 
@@ -133,6 +130,7 @@ for isbn in  lst_isbn:
     t3 = re.sub(u'\n\n+', '\n', t3, 0, re.M)
     t3 = re.sub(u'(<br\s{0,3}/>)', '', t3, 0, re.M)
     t3 = re.sub(u'&nbsp;', ' ', t3, 0, re.M)
+    t3 = re.sub(u'LDR', '000', t3,0, re.M)
     with open('t3.txt','w') as f:
         f.write(t3)
         f.close
@@ -143,7 +141,7 @@ for isbn in  lst_isbn:
     for child in tree.findall('tr'):
         texts = [child2.text for child2 in child.findall('td')]
         card.append(texts)
-    print card
+    #print card
     q = 0
     if args.verbose:
         print isbn, n
@@ -157,7 +155,7 @@ for isbn in  lst_isbn:
         q = q + 1
 
     n = n + 1
-    time.sleep(1)
+    time.sleep(2.2)
 
 # закрываем соединение с базой данных
 db.close()
