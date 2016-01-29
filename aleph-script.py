@@ -7,6 +7,7 @@ import MySQLdb
 import time
 import string
 from HTMLParser import HTMLParser
+import threading
 
 parser = argparse.ArgumentParser(description='Выделяем isbn')
 parser.add_argument('--in', required=True, dest='InFileName', help='укажите имя входного файла')
@@ -76,13 +77,27 @@ cursor.execute("SET character_set_connection=utf8")
 sql = u"""INSERT IGNORE INTO aleph(isbn, field, info)
         VALUES (%(isbn)s, %(field)s, %(info)s)
         """ 
+        
+def fun():
+    aleph_url = 'aleph.rsl.ru/'
+    first_parser = UrlFinder()
+    first_parser.feed(urllib.urlopen(aleph_url).read())
+    for link in first_parser.links:
+        if re.search('http://aleph.rsl.ru/F/.*?\?func=', link) is not False:
+            TOKEN = re.search('http://aleph.rsl.ru/F/.*?\?func=', link)
+            break
+    return TOKEN
+        
+tim=threading._Timer(2,fun)
+tim.start()
 
 n = 0
 for isbn in  lst_isbn:
     if (isbn == '' ):
        continue
     # урл к страничке, откуда будем тянуть ссылки
-    BASE_URL = 'http://aleph.rsl.ru/F/JS6L9T5BA15ANLHE38MLVU1YAHDE6KBBDYUP2RNDJ5NY7RUSNY-00661?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
+    BASE_URL = 'http://aleph.rsl.ru/F/HFEHKNC6SDNI8HT53XFXT3XMPDQDS45JAI1Q9LGCV5U6NLTYLL-00970?func=find-b&request=978-985-16-9404-0&find_code=WRD&adjacent=N&x=36&y=11
+    http://aleph.rsl.ru/F/JS6L9T5BA15ANLHE38MLVU1YAHDE6KBBDYUP2RNDJ5NY7RUSNY-00661?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
     # создаём экземпляр класса UrlFinder()
     parser = UrlFinder()
     # вызываем метод feed, который передаёт текст в parser. 
