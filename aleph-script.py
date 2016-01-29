@@ -79,17 +79,15 @@ sql = u"""INSERT IGNORE INTO aleph(isbn, field, info)
         VALUES (%(isbn)s, %(field)s, %(info)s)
         """ 
         
-
+    
+date_now = datetime.date(2016, 1, 1, 0, 0, 0)
         
 n = 0
 for isbn in  lst_isbn:
     if (isbn == '' ):
        continue
     # урл к страничке, откуда будем тянуть ссылки
-    date_now = datetime.date(2016, 1, 1)
-    datetime.datetime.now() - date_now = deltha2
-    deltha = date.timedelta(minutes=30)
-    if deltha < deltha2:
+    if datetime.datetime.now() - date_now >= datetime.timedelta(minutes=30):
         aleph_url = 'aleph.rsl.ru/'
         first_parser = UrlFinder()
         first_parser.feed(urllib.urlopen(aleph_url).read())
