@@ -81,7 +81,7 @@ sql = u"""INSERT IGNORE INTO aleph(isbn, field, info)
         """ 
         
     
-date_now = datetime.date(2016, 1, 1, 0, 0, 0)
+date_now = datetime.datetime(1, 0, 0)
         
 n = 0
 for isbn in  lst_isbn:
