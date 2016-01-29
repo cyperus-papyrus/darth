@@ -91,11 +91,15 @@ for isbn in  lst_isbn:
     if datetime.datetime.now() - date_now >= datetime.timedelta(minutes=30):
         aleph_url = 'aleph.rsl.ru/'
         first_parser = UrlFinder()
+        TOKEN = ''
         first_parser.feed(urllib.urlopen(aleph_url).read())
         for link in first_parser.links:
             if re.search('http://aleph.rsl.ru/F/.*?\?func=', link) is not False:
                 TOKEN = re.search('http://aleph.rsl.ru/F/.*?\?func=', link)
                 date_now = datetime.datetime.now()
+        if len(TOKEN) < 10 :
+            print "BAD TOKEN! ==>"+TOKEN
+            exit()
         
     BASE_URL = 'http://aleph.rsl.ru/F/' + TOKEN + '?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
     # создаём экземпляр класса UrlFinder()
