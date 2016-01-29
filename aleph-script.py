@@ -7,7 +7,7 @@ import MySQLdb
 import time
 import string
 from HTMLParser import HTMLParser
-import threading
+import thread
 
 parser = argparse.ArgumentParser(description='Выделяем isbn')
 parser.add_argument('--in', required=True, dest='InFileName', help='укажите имя входного файла')
@@ -85,11 +85,11 @@ def fun():
     for link in first_parser.links:
         if re.search('http://aleph.rsl.ru/F/.*?\?func=', link) is not False:
             TOKEN = re.search('http://aleph.rsl.ru/F/.*?\?func=', link)
+            time.sleep(2)
             break
     return TOKEN
         
-tim=threading._Timer(2,fun)
-tim.start()
+thread.start_mew_thread(fun, ())
 
 n = 0
 for isbn in  lst_isbn:
