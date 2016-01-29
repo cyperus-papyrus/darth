@@ -96,8 +96,7 @@ for isbn in  lst_isbn:
     if (isbn == '' ):
        continue
     # урл к страничке, откуда будем тянуть ссылки
-    BASE_URL = 'http://aleph.rsl.ru/F/HFEHKNC6SDNI8HT53XFXT3XMPDQDS45JAI1Q9LGCV5U6NLTYLL-00970?func=find-b&request=978-985-16-9404-0&find_code=WRD&adjacent=N&x=36&y=11
-    http://aleph.rsl.ru/F/JS6L9T5BA15ANLHE38MLVU1YAHDE6KBBDYUP2RNDJ5NY7RUSNY-00661?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
+    BASE_URL = 'http://aleph.rsl.ru/F/' + TOKEN + '?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
     # создаём экземпляр класса UrlFinder()
     parser = UrlFinder()
     # вызываем метод feed, который передаёт текст в parser. 
