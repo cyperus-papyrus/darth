@@ -89,7 +89,7 @@ for isbn in  lst_isbn:
        continue
     # урл к страничке, откуда будем тянуть ссылки
     if datetime.datetime.now() - date_now >= datetime.timedelta(minutes=30):
-        aleph_url = 'aleph.rsl.ru/'
+        aleph_url = 'http://aleph.rsl.ru/'
         first_parser = UrlFinder()
         TOKEN = ''
         first_parser.feed(urllib.urlopen(aleph_url).read())
