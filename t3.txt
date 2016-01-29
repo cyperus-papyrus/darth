@@ -1,78 +1,98 @@
-<table border="0" cellspacing="0" cellpadding="5">
-<tr bgcolor="#95928C" height="3"></tr>
-<tr height="7"></tr>
-<!-- end of view-head.tag -->
-    <!-- view-body.tag -->
-    <!-- view-marc.tag -->
-<tr >
-  <td valign="top">000</td>
-  <td valign="top">01218cam#a2200217#i#4500</td>
+<table>
+<tr>
+<td>FMT</td>
+<td>BK</td>
 </tr>
-<tr >
-  <td valign="top">001</td>
-  <td valign="top">004716111</td>
+<tr>
+<td>000</td>
+<td>     nam a22      i 4500</td>
 </tr>
-<tr >
-  <td valign="top">005</td>
-  <td valign="top">20100826134259.0</td>
+<tr>
+<td>001</td>
+<td>004993482</td>
 </tr>
-<tr >
-  <td valign="top">008</td>
-  <td valign="top">100803s2010####ru############000#|#rus|d</td>
+<tr>
+<td>005</td>
+<td>20110902104537.0</td>
 </tr>
-<tr >
-  <td valign="top">017</td>
-  <td valign="top">##$a 10-60306</td>
+<tr>
+<td>008</td>
+<td>110824s2011    bw ||||       0|| | rus|d</td>
 </tr>
-<tr >
-  <td valign="top">020</td>
-  <td valign="top">##$a 978-5-9922-0646-3</td>
+<tr>
+<td>017</td>
+<td>|a И6871-11 |b РГБ</td>
 </tr>
-<tr >
-  <td valign="top">040</td>
-  <td valign="top">##$a RuMoRKP$b rus$e rcr$d RuMoRGB</td>
+<tr>
+<td>020</td>
+<td>|a 978-985-16-9404-0</td>
 </tr>
-<tr >
-  <td valign="top">041</td>
-  <td valign="top">0#$a rus</td>
+<tr>
+<td>040</td>
+<td>|a RuMoRGB |b rus |e rcr</td>
 </tr>
-<tr >
-  <td valign="top">080</td>
-  <td valign="top">##$a 821.161.1-31</td>
+<tr>
+<td>0410</td>
+<td>|a rus</td>
 </tr>
-<tr >
-  <td valign="top">084</td>
-  <td valign="top">##$a Ш5(2=Р)75-644.5$2 rubbk</td>
+<tr>
+<td>044</td>
+<td>|a bw</td>
 </tr>
-<tr >
-  <td valign="top">100</td>
-  <td valign="top">1#$a Кружевский, Дмитрий Сергеевич</td>
+<tr>
+<td>084</td>
+<td>|a Ш9:О33я20(2) |2 rubbk</td>
 </tr>
-<tr >
-  <td valign="top">245</td>
-  <td valign="top">00$a Магфиг :$b роман$c Дмитрий Кружевский</td>
+<tr>
+<td>1001</td>
+<td>|a Архипов, Александр Юрьевич</td>
 </tr>
-<tr >
-  <td valign="top">260</td>
-  <td valign="top">##$a Москва$b Армада$b Изд-во Альфа-книга$c 2010</td>
+<tr>
+<td>24510</td>
+<td>|a Автомобили |h [Текст] : |b уникальные и парадоксальные : [летающие автомобили, автомобили-амфибии, электромобили, дома на колесах, автомобили на монорельсе : для среднего школьного возраста] |c А. Ю. Архипов</td>
 </tr>
-<tr >
-  <td valign="top">300</td>
-  <td valign="top">##$a 348, [1] с.$c 21 см</td>
+<tr>
+<td>260</td>
+<td>|a Минск |b Харвест |c cop. 2011</td>
 </tr>
-<tr >
-  <td valign="top">650</td>
-  <td valign="top">#7$a Филологические науки. Художественная литература -- Российская Федерация -- Русская литература -- с сер. 50-х гг. 20 в. -- Произведения художественной литературы -- Художественная проза -- Романы. Повести. Рассказы -- Фантастические и мистические романы, повести, рассказы. Романы ужасов$2 rubbk</td>
+<tr>
+<td>300</td>
+<td>|a 191 с. |b ил., цв. ил. |c 27 см</td>
 </tr>
-<tr >
-  <td valign="top">852</td>
-  <td valign="top">4#$a РГБ$b FB$j 10 10-33/117$x 70</td>
+<tr>
+<td>500</td>
+<td>|a На пер. авт. не указан</td>
 </tr>
-<tr >
-  <td valign="top">852</td>
-  <td valign="top">4#$a РГБ$b FB$j 10 10-33/118$x 70</td>
+<tr>
+<td>650 7</td>
+<td>|a Детская литература |2 rubbk</td>
 </tr>
-<!-- end of view-marc.tag -->
-<!-- end of view-body.tag -->
-    <!-- view-tail.tag -->
+<tr>
+<td>653</td>
+<td>|a энциклопедии для детей</td>
+</tr>
+<tr>
+<td>OWN</td>
+<td>|a RSL</td>
+</tr>
+<tr>
+<td>CAT</td>
+<td>|a OIK11 |b 10 |c 20110824 |l RSL01 |h 1137</td>
+</tr>
+<tr>
+<td>CAT</td>
+<td>|a OKZ52 |b 40 |c 20110830 |l RSL01 |h 1459</td>
+</tr>
+<tr>
+<td>CAT</td>
+<td>|a SPK64 |b 40 |c 20110902 |l RSL01 |h 1045</td>
+</tr>
+<tr>
+<td>CAT</td>
+<td>|a JSP |b 90 |c 20110905 |l RSL01 |h 1038</td>
+</tr>
+<tr>
+<td>SYS</td>
+<td>004993482</td>
+</tr>
 </table>
