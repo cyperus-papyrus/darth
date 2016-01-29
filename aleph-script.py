@@ -95,7 +95,7 @@ for isbn in  lst_isbn:
         first_parser.feed(urllib.urlopen(aleph_url).read())
         for link in first_parser.links:
             if re.search('http://aleph.rsl.ru/F/.*?\?func=', link) is not False:
-                TOKEN = re.search('http://aleph.rsl.ru/F/.*?\?func=', link)
+                TOKEN = re.search('http://aleph.rsl.ru/F/(.*?)\?func=', link).group(0)
                 date_now = datetime.datetime.now()
         if len(TOKEN) < 10 :
             print "BAD TOKEN! ==>"+TOKEN
