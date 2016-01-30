@@ -99,12 +99,13 @@ for isbn in  lst_isbn:
             print count," ",link
             if re.search('http://aleph\.rsl\.ru[:80]{0,5}/F/.*func=', link) is not False:
                 try: 
-                    TOKEN = re.search('http://aleph\.rsl\.ru[:80]{0,5}/F/(.*?)\?func=', link).groups()
+                    TOKEN = str(re.search('http://aleph\.rsl\.ru[:80]{0,5}/F/(.*?)\?func=', link).groups())
+                    print "НАШЛИ:" + TOKEN
                     date_now = datetime.datetime.now()
                 except AttributeError:
                     continue
         if len(TOKEN) < 10 :
-            print "BAD TOKEN! ==>"+TOKEN
+            print "BAD TOKEN! ==>"+str(TOKEN)
             exit()
         
     BASE_URL = 'http://aleph.rsl.ru/F/' + TOKEN + '?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
