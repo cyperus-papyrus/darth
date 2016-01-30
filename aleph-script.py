@@ -97,9 +97,9 @@ for isbn in  lst_isbn:
         for link in first_parser.links:
             count +=1
             print count," ",link
-            if re.search('http://aleph\.rsl\.ru/F/.*func=', link) is not False:
+            if re.search('http://aleph\.rsl\.ru[:80]{0,5}/F/.*func=', link) is not False:
                 try: 
-                    TOKEN = re.search('http://aleph\.rsl\.ru/F/(.*?)\?func=', link).groups()
+                    TOKEN = re.search('http://aleph\.rsl\.ru[:80]{0,5}/F/(.*?)\?func=', link).groups()
                     date_now = datetime.datetime.now()
                 except AttributeError:
                     continue
