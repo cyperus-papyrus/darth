@@ -89,19 +89,23 @@ for isbn in  lst_isbn:
        continue
     # урл к страничке, откуда будем тянуть ссылки
     if datetime.datetime.now() - date_now >= datetime.timedelta(minutes=30):
-        aleph_url = 'http://aleph.rsl.ru/'
+        aleph_url = 'http://aleph.rsl.ru/F/-?func=file&file_name=find-a'
         first_parser = UrlFinder()
         TOKEN = ''
         first_parser.feed(urllib.urlopen(aleph_url).read())
         count = 0
         for link in first_parser.links:
             count +=1
-            print count
-            if re.search('http://aleph\.rsl\.ru/F/.*func=', link) is not False:
-                TOKEN = re.search('http://aleph\.rsl\.ru/F/(.*?)\?func=', link).group(0)
-                date_now = datetime.datetime.now()
+            print count," ",link
+            if re.search('http://aleph\.rsl\.ru[:80]{0,5}/F/.*func=', link) is not False:
+                try: 
+                    TOKEN = str(re.search('http://aleph\.rsl\.ru[:80]{0,5}/F/(.*?)\?func=', link).groups())
+                    print "НАШЛИ:" + TOKEN
+                    date_now = datetime.datetime.now()
+                except AttributeError:
+                    continue
         if len(TOKEN) < 10 :
-            print "BAD TOKEN! ==>"+TOKEN
+            print "BAD TOKEN! ==>"+str(TOKEN)
             exit()
         
     BASE_URL = 'http://aleph.rsl.ru/F/' + TOKEN + '?func=find-b&request=' + str(isbn) + '&find_code=WIB&adjacent=N&x=36&y=7'
