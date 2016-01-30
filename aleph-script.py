@@ -98,7 +98,7 @@ for isbn in  lst_isbn:
             count +=1
             print count
             if re.search('http://aleph\.rsl\.ru/F/.*func=', link) is not False:
-                TOKEN = re.search('http://aleph\.rsl\.ru/F/(.*?)\?func=', link).group(0)
+                TOKEN = re.search('http://aleph\.rsl\.ru/F/(.*?)\?func=', link).groups()
                 date_now = datetime.datetime.now()
         if len(TOKEN) < 10 :
             print "BAD TOKEN! ==>"+TOKEN
