@@ -96,7 +96,7 @@ for isbn in  lst_isbn:
         count = 0
         for link in first_parser.links:
             count +=1
-            print count
+            print count," ",link
             if re.search('http://aleph\.rsl\.ru/F/.*func=', link) is not False:
                 TOKEN = re.search('http://aleph\.rsl\.ru/F/(.*?)\?func=', link).groups()
                 date_now = datetime.datetime.now()
