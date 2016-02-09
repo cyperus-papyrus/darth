@@ -77,7 +77,7 @@ cursor.execute("SET NAMES utf8;")
 cursor.execute("SET CHARACTER SET utf8")
 cursor.execute("SET character_set_connection=utf8")
 sql = u"""INSERT IGNORE INTO aleph(isbn, field, info)
-        VALUES (%(isbn)s, %(field)s, %(info)s)
+        VALUES (%(isbn)s, %(field)s, %(info)s, %(source)s)
         """ 
         
     
@@ -121,7 +121,7 @@ for isbn in  lst_isbn:
             break
     else:    
         print isbn, u' не могу найти такой isbn!'
-        cursor.execute(sql,{"isbn":isbn, "field": u'xxx', "info": ''})
+        cursor.execute(sql,{"isbn":isbn, "field": u'xxx', "info": '', "source": ''})
         # применяем изменения к базе данных
         db.commit()
         continue
@@ -142,7 +142,7 @@ for isbn in  lst_isbn:
         print isbn, u' не могу найти!'
         # исполняем SQL-запрос
         #print sql
-        cursor.execute(sql,{"isbn":isbn, "field": u'xxx', "info": ''})
+        cursor.execute(sql,{"isbn":isbn, "field": u'xxx', "info": '', "source": ''})
         # применяем изменения к базе данных
         db.commit()
         continue
@@ -178,7 +178,7 @@ for isbn in  lst_isbn:
     # подставляем эти данные в SQL-запрос
         # исполняем SQL-запрос
         #print sql
-        cursor.execute(sql,{"isbn":isbn, "field": card[q][0], "info": card[q][1]})
+        cursor.execute(sql,{"isbn":isbn, "field": card[q][0], "info": card[q][1], "source":u'RuMoRGB'})
         # применяем изменения к базе данных
         db.commit()
         q = q + 1
